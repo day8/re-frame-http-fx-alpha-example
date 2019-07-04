@@ -1,0 +1,9 @@
+/.idea/
+/.lein-repl-history
+/.shadow-cljs/
+/http-fx-2-example.iml
+/node_modules/
+/resources/public/css/
+/resources/public/js/
+/target/
+/.nrepl-port
