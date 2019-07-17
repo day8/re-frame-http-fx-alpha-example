@@ -3,7 +3,7 @@
                  [ns-tracker "0.4.0"]
                  [org.clojure/clojure "1.10.1"]
                  [org.clojure/clojurescript "1.10.520"]
-                 [re-frame "0.10.7"]
+                 [re-frame "0.10.8"]
                  [re-com "2.5.0"]
                  [clj-commons/secretary "1.2.4"]
                  [venantius/accountant "0.2.4"]
