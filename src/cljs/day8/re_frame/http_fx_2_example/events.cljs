@@ -8,7 +8,17 @@
 (reg-event-fx
   ::initialize
   (fn-traced [_ _]
-    {:db db/default-db}))
+    {:db db/default-db
+     :http #:http {:reg-profile :example
+                   :values #:http {:mode "cors"
+                                   :credentials "omit"
+                                   :content-types {#"application/.*json.*" :json}
+                                   :in-wait [::http-in-wait]
+                                   :in-process [::http-in-process]
+                                   :in-problem [::http-in-problem]
+                                   :in-failed [::http-in-failed]
+                                   :in-succeeded [::http-in-succeeded]
+                                   :in-done [::http-in-done]}}}))
 
 (reg-event-db
   ::set-active-panel
@@ -30,19 +40,11 @@
                 (str "http://localhost:8080/" (name endpoint)))]
       {:db (assoc db :state :in-requested)
        :http #:http {:id :xyz
+                     :profiles [:example]
                      :get uri
                      :params {:frequency frequency}
                      :timeout timeout
-                     :mode "cors"
-                     :credentials "omit"
-                     :content-types {#"application/.*json.*" :json}
-                     :context {:max-retries max-retries}
-                     :in-wait [::http-in-wait]
-                     :in-process [::http-in-process]
-                     :in-problem [::http-in-problem]
-                     :in-failed [::http-in-failed]
-                     :in-succeeded [::http-in-succeeded]
-                     :in-done [::http-in-done]}})))
+                     :context {:max-retries max-retries}}})))
 
 (reg-event-fx
   ::http-abort
