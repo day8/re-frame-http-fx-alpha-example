@@ -1,11 +1,15 @@
 (ns day8.re-frame.http-fx-2-example.views
   (:require
-   [reagent.core :as reagent]
+   [reagent.core :as r]
    [re-frame.core :as re-frame :refer [subscribe dispatch]]
    [re-com.core :as re-com]
+   ["react-highlight.js" :default react-highlightjs]
+   ["highlight.js/lib/languages/clojure"]
    [day8.re-frame.http-fx-2-example.events :as events]
    [day8.re-frame.http-fx-2-example.routes :as routes]
    [day8.re-frame.http-fx-2-example.subs :as subs]))
+
+(def highlight (r/adapt-react-class react-highlightjs))
 
 (defn fsm
   []
@@ -547,34 +551,49 @@
                               [re-com/label
                                :label (str (:frequency @server)"%")]]])]]))
 
-(defn knobs
+(defn code
+  []
+  (let [handler (subscribe [::subs/handler])]
+    [re-com/box
+     :width "555px"
+     :child [highlight {:language "clojure"}
+             @handler]]))
+
+(defn buttons
   []
   (let [state (subscribe [::subs/state])]
+    [re-com/h-box
+     :justify :center
+     :children [[re-com/button
+                 :label "Go!"
+                 :disabled? (not= :idle @state)
+                 :on-click #(dispatch [::events/http-go])
+                 :style {:width "131px"
+                         :background-color "#2ECC40"
+                         :border "1px solid #111"
+                         :color "#111"}]
+                [re-com/gap :size "31px"]
+                [re-com/button
+                 :label "Abort!"
+                 :disabled? (= :idle @state)
+                 :on-click #(dispatch [::events/http-abort])
+                 :style {:width "131px"
+                         :background-color "#FF4136"
+                         :border "1px solid #111"
+                         :color "#111"}]]]))
+
+(defn knobs
+  []
+  (let []
     [re-com/v-box
      :style {:margin-top "50px"
              :padding-left "50px"
              :padding-right "50px"}
      :children [[server-knobs]
                 [re-com/gap :size "31px"]
-                [re-com/h-box
-                 :justify :center
-                 :children [[re-com/button
-                             :label "Go!"
-                             :disabled? (not= :idle @state)
-                             :on-click #(dispatch [::events/http-go])
-                             :style {:width "131px"
-                                     :background-color "#2ECC40"
-                                     :border "1px solid #111"
-                                     :color "#111"}]
-                            [re-com/gap :size "31px"]
-                            [re-com/button
-                             :label "Abort!"
-                             :disabled? (= :idle @state)
-                             :on-click #(dispatch [::events/http-abort])
-                             :style {:width "131px"
-                                     :background-color "#FF4136"
-                                     :border "1px solid #111"
-                                     :color "#111"}]]]]]))
+                [buttons]
+                [re-com/gap :size "31px"]
+                [code]]]))
 
 (defn home-panel
   []
