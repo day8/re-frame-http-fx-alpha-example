@@ -522,12 +522,7 @@
   []
   (let [server (subscribe [::subs/server])]
     [re-com/v-box
-     :children [[re-com/title
-                 :label "Server"
-                 :level :level2
-                 :style {:margin-top "31px"
-                         :margin-bottom "31px"}]
-                [re-com/h-box
+     :children [[re-com/h-box
                  :children [[re-com/label
                              :label "Endpoint"]
                             [re-com/gap :size "12px"]
@@ -552,70 +547,34 @@
                               [re-com/label
                                :label (str (:frequency @server)"%")]]])]]))
 
-(defn client-knobs
-  []
-  (let [client (subscribe [::subs/client])]
-    [re-com/v-box
-     :children [[re-com/title
-                 :label "Client"
-                 :level :level2
-                 :style {:margin-top "31px"
-                         :margin-bottom "31px"}]
-                [re-com/h-box
-                 :children [[re-com/label
-                             :label "Timeout"]
-                            [re-com/gap :size "12px"]
-                            [re-com/slider
-                             :model (:timeout @client)
-                             :on-change #(dispatch [::events/set [:client :timeout] %])
-                             :min 1
-                             :max 10000
-                             :step 10
-                             :width "343px"]
-                            [re-com/gap :size "12px"]
-                            [re-com/label
-                             :label (str (:timeout @client)"ms")]]]
-                [re-com/gap :size "19px"]
-                [re-com/h-box
-                 :children [[re-com/label
-                             :label "Max Retries"]
-                            [re-com/gap :size "12px"]
-                            [re-com/slider
-                             :model (:max-retries @client)
-                             :on-change #(dispatch [::events/set [:client :max-retries] %])
-                             :min 0
-                             :max 10
-                             :step 1
-                             :width "343px"]
-                            [re-com/gap :size "12px"]
-                            [re-com/label
-                             :label (str (:max-retries @client)"x")]]]]]))
-
 (defn knobs
   []
-  [re-com/v-box
-   :style {:margin-top "50px"
-           :padding-left "50px"
-           :padding-right "50px"}
-   :children [[re-com/h-box
-               :justify :center
-               :children [[re-com/button
-                           :label "Go!"
-                           :on-click #(dispatch [::events/http-go])
-                           :style {:width "131px"
-                                   :background-color "#2ECC40"
-                                   :border "1px solid #111"
-                                   :color "#111"}]
-                          [re-com/gap :size "31px"]
-                          [re-com/button
-                           :label "Abort!"
-                           :on-click #(dispatch [::events/http-abort])
-                           :style {:width "131px"
-                                   :background-color "#FF4136"
-                                   :border "1px solid #111"
-                                   :color "#111"}]]]
-              [server-knobs]
-              [client-knobs]]])
+  (let [state (subscribe [::subs/state])]
+    [re-com/v-box
+     :style {:margin-top "50px"
+             :padding-left "50px"
+             :padding-right "50px"}
+     :children [[server-knobs]
+                [re-com/gap :size "31px"]
+                [re-com/h-box
+                 :justify :center
+                 :children [[re-com/button
+                             :label "Go!"
+                             :disabled? (not= :idle @state)
+                             :on-click #(dispatch [::events/http-go])
+                             :style {:width "131px"
+                                     :background-color "#2ECC40"
+                                     :border "1px solid #111"
+                                     :color "#111"}]
+                            [re-com/gap :size "31px"]
+                            [re-com/button
+                             :label "Abort!"
+                             :disabled? (= :idle @state)
+                             :on-click #(dispatch [::events/http-abort])
+                             :style {:width "131px"
+                                     :background-color "#FF4136"
+                                     :border "1px solid #111"
+                                     :color "#111"}]]]]]))
 
 (defn home-panel
   []
