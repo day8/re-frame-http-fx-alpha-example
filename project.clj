@@ -8,7 +8,17 @@
                  [clj-commons/secretary "1.2.4"]
                  [venantius/accountant "0.2.4"]
                  [garden "1.3.9"]
-                 [day8.re-frame/http-fx-2 "2.0.0-SNAPSHOT"]]
+                 [day8.re-frame/http-fx-2 "2.0.0-SNAPSHOT"]
+                 [compojure "1.6.1"
+                  :exclusions [ring/ring-codec]]
+                 [metosin/ring-http-response "0.9.1"]
+                 [ring/ring-core "1.7.1"]
+                 [ring/ring-devel "1.7.1"]
+                 [ring-cors "0.1.13"]
+                 [ring/ring-json "0.4.0"
+                  :exclusions [ring/ring-core]]
+                 [ring/ring-defaults "0.3.2"
+                  :exclusions [ring/ring-core]]]
 
   :plugins [[lein-garden "0.3.0"]]
 

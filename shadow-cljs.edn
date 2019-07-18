@@ -2,6 +2,8 @@
 
  :nrepl  {:port 8777}
 
+ :dev-http {8080 {:handler day8.re-frame.http-fx-2-example.handler/api-handler}}
+
  :builds {:app
           {:target     :browser
            :output-dir "resources/public/js/compiled/out"
