@@ -9,7 +9,7 @@
 
 (defn fsm
   []
-  (let []
+  (let [state (subscribe [::subs/state])]
     [:svg {:xmlns "http://www.w3.org/2000/svg"
            :xmlnsXlink "http://www.w3.org/1999/xlink"
            :contentScriptType "application/ecmascript"
@@ -26,7 +26,7 @@
      [:defs]
      [:g
       [:rect {:fill "#ADD8E6"
-              :class "pulse"
+              :class (if (= :in-requested @state) "pulse" "")
               :height "40"
               :rx "12.5"
               :ry "12.5"
@@ -43,6 +43,7 @@
               :x "12.6973"
               :y "129.8467"} "::in-requested"]
       [:rect {:fill "#ADD8E6"
+              :class (if (= :in-wait @state) "pulse" "")
               :height "64.2344"
               :rx "12.5"
               :ry "12.5"
@@ -78,7 +79,8 @@
               :textLength "142"
               :x "123.697"
               :y "278.4043"} "and a server response"]
-      [:rect {:fill "#ADD8E6"
+      [:rect {:class (if (= :in-process @state) "pulse" "")
+              :fill "#ADD8E6"
               :height "78.2031"
               :rx "12.5"
               :ry "12.5"
@@ -121,7 +123,8 @@
               :textLength "59"
               :x "289.697"
               :y "463.373"} "in app-db"]
-      [:rect {:fill "#ADD8E6"
+      [:rect {:class (if (= :in-succeeded @state) "pulse" "")
+              :fill "#ADD8E6"
               :height "40"
               :rx "12.5"
               :ry "12.5"
@@ -137,7 +140,8 @@
               :textLength "79"
               :x "341.697"
               :y "617.8467"} "::in-succeeded"]
-      [:rect {:fill "#ADD8E6"
+      [:rect {:class (if (= :in-done @state) "pulse" "")
+              :fill "#ADD8E6"
               :height "40"
               :rx "12.5"
               :ry "12.5"
@@ -153,7 +157,8 @@
               :textLength "38"
               :x "362.197"
               :y "734.8467"} "::in-done"]
-      [:rect {:fill "#CCCCCC"
+      [:rect {:class (if (= :in-problem @state) "pulse" "")
+              :fill "#CCCCCC"
               :height "40"
               :rx "12.5"
               :ry "12.5"
@@ -176,7 +181,8 @@
                  :ry "10"
                  :style {:stroke "none"
                          :stroke-width "1.0"}}]
-      [:rect {:fill "#CCCCCC"
+      [:rect {:class (if (= :in-failed @state) "pulse" "")
+              :fill "#CCCCCC"
               :height "40"
               :rx "12.5"
               :ry "12.5"
@@ -192,7 +198,8 @@
               :textLength "40"
               :x "138.197"
               :y "617.8467"} "::in-failed"]
-      [:rect {:fill "#CCCCCC"
+      [:rect {:class (if (= :in-cancelled @state) "pulse" "")
+              :fill "#CCCCCC"
               :height "40"
               :rx "12.5"
               :ry "12.5"
