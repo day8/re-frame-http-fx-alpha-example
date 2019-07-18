@@ -24,9 +24,14 @@
   ::http-go
   (fn-traced [{:keys [db]} _]
     (let [{{:keys [endpoint frequency]} :server} db
-          {{:keys [timeout max-retries]} :client} db]
+          {{:keys [timeout max-retries]} :client} db
+          uri (if (= :invalid endpoint)
+                "http://i-do-not-exist/invalid"
+                (str "http://localhost:8080/" (name endpoint)))]
       {:db (assoc db :state :in-requested)
-       :http #:http {:with-profiles [endpoint]
+       :http #:http {:id :xyz
+                     :get uri
+                     :params {:frequency frequency}
                      :timeout timeout
                      :mode "cors"
                      :credentials "omit"
@@ -41,12 +46,15 @@
 
 (reg-event-fx
   ::http-abort
-  (fn-traced [{:keys [db]} _]))
+  (fn-traced [{:keys [db]} _]
+    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-cancelled]}]
+     :http #:http {:abort :xyz}}))
 
-(reg-event-db
+(reg-event-fx
   ::http-in-wait
-  (fn-traced [db _]
-    (assoc db :state :in-wait)))
+  (fn-traced [{:keys [db]} _]
+    :dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-wait]}]))
+
 
 (reg-event-fx
   ::http-in-problem
@@ -59,35 +67,35 @@
         (let [re-req (-> req
                          (assoc-in [:http/context :retry-count] (inc current-retires)))]
           {:http re-req
-           :db (assoc db :state :in-problem)})
-        {:db (assoc db :state :in-problem)
+           :dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-problem]}]})
+        {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-problem]}]
          :http #:http {:transition :failed
                        :request req}}))))
 
 (reg-event-fx
   ::http-in-failed
   (fn-traced [{:keys [db]} [_ req res]]
-    {:db (assoc db :state :in-failed)
+    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-failed]}]
      :http #:http {:transition :done
                    :request req}}))
 
 (reg-event-fx
   ::http-in-process
   (fn-traced [{:keys [db]} [_ {:http/keys [context] :as req} res]]
-    {:db (-> db
-             (assoc db :state :in-process)
-             (assoc-in (:path context) (:body res)))
+    {:db (assoc-in db (:path context) (:body res))
+     :dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-process]}]
      :http #:http {:transition :succeeded
                    :request req}}))
 
 (reg-event-fx
   ::http-in-succeeded
   (fn-traced [{:keys [db]} [_ req]]
-    {:db (assoc db :state :in-succeeded)
+    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-succeeded]}]
      :http #:http {:transition :done
                    :request req}}))
 
-(reg-event-db
+(reg-event-fx
   ::http-in-done
   (fn-traced [{:keys [db]} [_ req]]
-    (assoc db :state :in-done)))
+    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-done]}
+                      {:ms 6000 :dispatch [::set [:state] :idle]}]}))

@@ -1,7 +1,9 @@
 (ns day8.re-frame.http-fx-2-example.db)
 
 (def default-db
-  {:server {:endpoint :success
+  {:state :idle
+
+   :server {:endpoint :success
             :endpoints [{:id :success :label "Success"}
                         {:id :failure :label "Failure"}
                         {:id :timeout :label "Timeout"}
