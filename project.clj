@@ -1,5 +1,5 @@
 (defproject day8.re-frame/http-fx-2-example "0.1.0-SNAPSHOT"
-  :dependencies [[thheller/shadow-cljs "2.8.40"]
+  :dependencies [[thheller/shadow-cljs "2.8.41"]
                  [ns-tracker "0.4.0"]
                  [org.clojure/clojure "1.10.1"]
                  [org.clojure/clojurescript "1.10.520"]
