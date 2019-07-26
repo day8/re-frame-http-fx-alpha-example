@@ -11,7 +11,6 @@
 (defroutes routes
   (GET "/success"
        []
-       (Thread/sleep 5000)
        (ok "OK"))
   (POST "/upload"
         []
