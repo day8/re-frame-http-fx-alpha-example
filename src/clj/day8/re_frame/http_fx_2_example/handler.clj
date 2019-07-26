@@ -13,6 +13,10 @@
        []
        (Thread/sleep 5000)
        (ok "OK"))
+  (POST "/upload"
+        []
+        (Thread/sleep 3000)
+        (ok "OK"))
   (GET "/timeout"
        [frequency]
        (when (<= (rand-int 101) (Integer/parseInt frequency))
