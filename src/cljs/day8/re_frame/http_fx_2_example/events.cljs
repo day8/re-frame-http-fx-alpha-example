@@ -48,14 +48,14 @@
   (fn-traced [{:keys [db]} _]
     (let [{{:keys [endpoint frequency]} :server} db
           {{:keys [timeout max-retries]} :client} db
-          uri (if (= :invalid endpoint)
+          url (if (= :invalid endpoint)
                 "http://i-do-not-exist/invalid"
                 (str "http://localhost:8080/" (name endpoint)))
           db-path [:http :example]]
       {:db   (assoc-in db (conj db-path :history) [])
        :http {:action   :GET
               :profiles [:example]
-              :get      uri
+              :url      url
               :params   {:frequency frequency}
               :timeout  timeout
               :context  {:db-path     db-path
