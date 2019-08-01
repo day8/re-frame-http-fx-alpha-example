@@ -13,12 +13,12 @@
             :values {:mode "cors"
                      :credentials "omit"
                      :content-types {#"application/.*json.*" :json}
-                     :in-wait [::http-in-wait]
-                     :in-process [::http-in-process]
-                     :in-problem [::http-in-problem]
-                     :in-failed [::http-in-failed]
-                     :in-succeeded [::http-in-succeeded]
-                     :in-done [::http-in-done]}}}))
+                     :fsm {:in-wait [::http-in-wait]
+                           :in-process [::http-in-process]
+                           :in-problem [::http-in-problem]
+                           :in-failed [::http-in-failed]
+                           :in-succeeded [::http-in-succeeded]
+                           :in-done [::http-in-done]}}}}))
 
 (reg-event-db
   ::set-active-panel
