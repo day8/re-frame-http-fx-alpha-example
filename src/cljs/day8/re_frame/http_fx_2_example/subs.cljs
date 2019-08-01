@@ -31,7 +31,7 @@
           uri (case endpoint
                 :invalid "http://i-do-not-exist/invalid"
                 (str "http://localhost:8080/" (name endpoint)))
-          code (goog.string/format "(reg-event-fx %s (fn-traced [_ _] {:http #:http {:id :xyz :profiles [:example] :get %s}}))"
+          code (goog.string/format "(reg-event-fx %s (fn-traced [_ _] {:http {:id :xyz :profiles [:example] :get %s}}))"
                     endpoint
                     uri)]
       code)))
