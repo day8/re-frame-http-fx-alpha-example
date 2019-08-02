@@ -14,12 +14,20 @@
             :values {:mode "cors"
                      :credentials "omit"
                      :content-types {#"application/.*json.*" :json}
-                     :fsm {:in-wait [::http-in-wait]
+                     :fsm {:in-setup [::http-in-setup]
                            :in-process [::http-in-process]
                            :in-problem [::http-in-problem]
                            :in-failed [::http-in-failed]
                            :in-succeeded [::http-in-succeeded]
                            :in-done [::http-in-done]}}}}))
+
+(reg-event-fx
+  ::http-in-setup
+  (fn-traced [{:keys [db]} [_ {:keys [request-id context]}]]
+    {:db (assoc-in db (conj (:path context) :request-id) request-id)
+     :http {:action :trigger
+            :trigger :send
+            :request-id request-id}}))
 
 (reg-event-db
   ::set-active-panel
@@ -45,7 +53,8 @@
               :get uri
               :params {:frequency frequency}
               :timeout timeout
-              :context {:max-retries max-retries}}})))
+              :context {:path [:http :example]
+                        :max-retries max-retries}}})))
 
 (reg-event-fx
   ::http-abort
