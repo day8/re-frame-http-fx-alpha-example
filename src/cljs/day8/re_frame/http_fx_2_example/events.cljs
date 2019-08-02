@@ -50,8 +50,7 @@
 (reg-event-fx
   ::http-abort
   (fn-traced [{:keys [db]} _]
-    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-cancelled]}]
-     :http {:action :abort
+    {:http {:action :abort
             :request-id :xyz}}))
 
 (reg-event-fx
@@ -64,18 +63,15 @@
       (if try-again?
         {:http {:action :trigger
                 :trigger :retry
-                :request-id request-id}
-         :dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-problem]}]}
-        {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-problem]}]
-         :http {:action :trigger
+                :request-id request-id}}
+        {:http {:action :trigger
                 :trigger :fail
                 :request-id request-id}}))))
 
 (reg-event-fx
   ::http-in-failed
   (fn-traced [{:keys [db]} [_ {:keys [request-id]}]]
-    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-failed]}]
-     :http {:action :trigger
+    {:http {:action :trigger
             :trigger :done
             :request-id request-id}}))
 
@@ -83,7 +79,6 @@
   ::http-in-process
   (fn-traced [{:keys [db]} [_ {:keys [request-id context] :as request-state} res]]
     {:db (assoc-in db (:path context) (:body res))
-     :dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-process]}]
      :http {:action :trigger
             :trigger :processed
             :request-id request-id}}))
@@ -91,13 +86,10 @@
 (reg-event-fx
   ::http-in-succeeded
   (fn-traced [{:keys [db]} [_ {:keys [request-id] :as request-state}]]
-    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-succeeded]}]
-     :http {:action :trigger
+    {:http {:action :trigger
             :trigger :done
             :request-id request-id}}))
 
 (reg-event-fx
   ::http-in-done
-  (fn-traced [{:keys [db]} [_ req]]
-    {:dispatch-later [{:ms 3000 :dispatch [::set [:state] :in-done]}
-                      {:ms 6000 :dispatch [::set [:state] :idle]}]}))
+  (fn-traced [{:keys [db]} [_ req]]))
