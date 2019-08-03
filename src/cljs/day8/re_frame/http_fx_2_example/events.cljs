@@ -19,7 +19,7 @@
                                      :in-problem   [::http-in-problem]
                                      :in-failed    [::http-in-failed]
                                      :in-succeeded [::http-in-succeeded]
-                                     :in-done      [::http-in-done]}}}}))
+                                     :in-teardown  [::http-in-teardown]}}}}))
 
 (reg-event-fx
   ::http-in-setup
@@ -109,5 +109,8 @@
             :request-id request-id}}))
 
 (reg-event-fx
-  ::http-in-done
-  (fn-traced [{:keys [db]} [_ req]]))
+  ::http-in-teardown
+  (fn-traced [{:keys [db]} [_ {:keys [request-id context] :as request-state}]]
+    (let [{:keys [db-path]} context]
+      {:db (update-in db (conj db-path :history) conj {:state-handler :in-teardown
+                                                       :request-state request-state})})))
