@@ -47,14 +47,14 @@
           uri (if (= :invalid endpoint)
                 "http://i-do-not-exist/invalid"
                 (str "http://localhost:8080/" (name endpoint)))]
-      {:db (assoc db :state :in-requested)
-       :http {:action :GET
+      {:db   (assoc db :state :in-requested)
+       :http {:action   :GET
               :profiles [:example]
-              :get uri
-              :params {:frequency frequency}
-              :timeout timeout
-              :context {:path [:http :example]
-                        :max-retries max-retries}}})))
+              :get      uri
+              :params   {:frequency frequency}
+              :timeout  timeout
+              :context  {:path        [:http :example]
+                         :max-retries max-retries}}})))
 
 (reg-event-fx
   ::http-abort
