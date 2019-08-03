@@ -65,13 +65,17 @@
 
 (reg-event-fx
   ::http-in-problem
-  (fn-traced [{:keys [db]} [_ {:keys [request-id context timeout] :as request-state} res {:http/keys [problem] :as err}]]
-    (let [temporary? (= :problem/timeout problem)
-          max-retries (:max-retries context)
-          current-retires (get context :retry-count 0)
-          try-again? (and (< current-retires max-retries) temporary?)]
+  (fn-traced [{:keys [db]} [_ {:keys [request-id context problem] :as request-state}]]
+    (let [{:keys [db-path max-retries]} context
+          temporary? (= :timeout problem)
+          num-retires (get-in db (conj db-path :num-retries) 0)
+          try-again? (and temporary? (< num-retires max-retries))]
       (if try-again?
-        {:http {:action     :trigger
+        {:db   (-> db
+                   (update-in (conj db-path :history) conj {:state-handler :in-problem
+                                                            :request-state request-state})
+                   (update-in (conj db-path :num-retries) inc))
+         :http {:action     :trigger
                 :trigger    :retry
                 :request-id request-id}}
         {:http {:action     :trigger
