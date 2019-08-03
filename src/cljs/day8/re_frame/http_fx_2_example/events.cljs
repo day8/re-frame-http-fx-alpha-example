@@ -98,11 +98,15 @@
 
 (reg-event-fx
   ::http-in-process
-  (fn-traced [{:keys [db]} [_ {:keys [request-id context] :as request-state} res]]
-    {:db   (assoc-in db (:path context) (:body res))
-     :http {:action     :trigger
-            :trigger    :processed
-            :request-id request-id}}))
+  (fn-traced [{:keys [db]} [_ {:keys [request-id context response] :as request-state}]]
+    (let [{:keys [db-path]} context]
+      {:db   (-> db
+                 (update-in (conj db-path :history) conj {:state-handler :in-process
+                                                          :request-state request-state})
+                 (assoc-in (conj db-path :body) (:body response)))
+       :http {:action     :trigger
+              :trigger    :processed
+              :request-id request-id}})))
 
 (reg-event-fx
   ::http-in-succeeded
