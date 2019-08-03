@@ -23,11 +23,15 @@
 
 (reg-event-fx
   ::http-in-setup
-  (fn-traced [{:keys [db]} [_ {:keys [request-id context]}]]
-    {:db   (assoc-in db (conj (:path context) :request-id) request-id)
-     :http {:action     :trigger
-            :trigger    :send
-            :request-id request-id}}))
+  (fn-traced [{:keys [db]} [_ {:keys [request-id context] :as request-state}]]
+    (let [{:keys [db-path]} context]
+      {:db   (-> db
+                 (update-in (conj db-path :history) conj {:state-handler :in-setup
+                                                          :request-state request-state})
+                 (assoc-in (conj db-path :request-id) request-id))
+       :http {:action     :trigger
+              :trigger    :send
+              :request-id request-id}})))
 
 (reg-event-db
   ::set-active-panel
