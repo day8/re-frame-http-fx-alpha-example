@@ -88,9 +88,9 @@
 (reg-event-fx
   ::http-in-process
   (fn-traced [{:keys [db]} [_ {:keys [request-id context] :as request-state} res]]
-    {:db (assoc-in db (:path context) (:body res))
-     :http {:action :trigger
-            :trigger :processed
+    {:db   (assoc-in db (:path context) (:body res))
+     :http {:action     :trigger
+            :trigger    :processed
             :request-id request-id}}))
 
 (reg-event-fx
