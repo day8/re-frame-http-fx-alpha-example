@@ -81,8 +81,8 @@
 (reg-event-fx
   ::http-in-failed
   (fn-traced [{:keys [db]} [_ {:keys [request-id]}]]
-    {:http {:action :trigger
-            :trigger :done
+    {:http {:action     :trigger
+            :trigger    :done
             :request-id request-id}}))
 
 (reg-event-fx
