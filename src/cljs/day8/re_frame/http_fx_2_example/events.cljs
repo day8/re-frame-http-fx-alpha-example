@@ -110,10 +110,13 @@
 
 (reg-event-fx
   ::http-in-succeeded
-  (fn-traced [{:keys [db]} [_ {:keys [request-id] :as request-state}]]
-    {:http {:action     :trigger
-            :trigger    :done
-            :request-id request-id}}))
+  (fn-traced [{:keys [db]} [_ {:keys [request-id context] :as request-state}]]
+    (let [{:keys [db-path]} context]
+      {:db   (update-in db (conj db-path :history) conj {:state-handler :in-succeeded
+                                                         :request-state request-state})
+       :http {:action     :trigger
+              :trigger    :done
+              :request-id request-id}})))
 
 (reg-event-fx
   ::http-in-teardown
