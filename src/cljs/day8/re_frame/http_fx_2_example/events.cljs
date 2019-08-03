@@ -71,11 +71,11 @@
           current-retires (get context :retry-count 0)
           try-again? (and (< current-retires max-retries) temporary?)]
       (if try-again?
-        {:http {:action :trigger
-                :trigger :retry
+        {:http {:action     :trigger
+                :trigger    :retry
                 :request-id request-id}}
-        {:http {:action :trigger
-                :trigger :fail
+        {:http {:action     :trigger
+                :trigger    :fail
                 :request-id request-id}}))))
 
 (reg-event-fx
