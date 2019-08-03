@@ -60,7 +60,7 @@
   ::http-abort
   (fn-traced [{:keys [db]} _]
     (let [request-id (get-in db [:http :example :request-id])]
-      {:http {:action :abort
+      {:http {:action     :abort
               :request-id request-id}})))
 
 (reg-event-fx
