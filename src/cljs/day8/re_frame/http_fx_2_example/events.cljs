@@ -50,14 +50,15 @@
           {{:keys [timeout max-retries]} :client} db
           uri (if (= :invalid endpoint)
                 "http://i-do-not-exist/invalid"
-                (str "http://localhost:8080/" (name endpoint)))]
-      {:db   (assoc db :state :in-requested)
+                (str "http://localhost:8080/" (name endpoint)))
+          db-path [:http :example]]
+      {:db   (assoc-in db (conj db-path :history) [])
        :http {:action   :GET
               :profiles [:example]
               :get      uri
               :params   {:frequency frequency}
               :timeout  timeout
-              :context  {:path        [:http :example]
+              :context  {:db-path     db-path
                          :max-retries max-retries}}})))
 
 (reg-event-fx
