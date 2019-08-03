@@ -24,9 +24,9 @@
 (reg-event-fx
   ::http-in-setup
   (fn-traced [{:keys [db]} [_ {:keys [request-id context]}]]
-    {:db (assoc-in db (conj (:path context) :request-id) request-id)
-     :http {:action :trigger
-            :trigger :send
+    {:db   (assoc-in db (conj (:path context) :request-id) request-id)
+     :http {:action     :trigger
+            :trigger    :send
             :request-id request-id}}))
 
 (reg-event-db
