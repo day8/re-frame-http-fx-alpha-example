@@ -8,18 +8,18 @@
 (reg-event-fx
   ::initialize
   (fn-traced [_ _]
-    {:db db/default-db
+    {:db   db/default-db
      :http {:action :reg-profile
-            :id :example
-            :values {:mode "cors"
-                     :credentials "omit"
+            :id     :example
+            :values {:mode          "cors"
+                     :credentials   "omit"
                      :content-types {#"application/.*json.*" :json}
-                     :fsm {:in-setup [::http-in-setup]
-                           :in-process [::http-in-process]
-                           :in-problem [::http-in-problem]
-                           :in-failed [::http-in-failed]
-                           :in-succeeded [::http-in-succeeded]
-                           :in-done [::http-in-done]}}}}))
+                     :fsm           {:in-setup     [::http-in-setup]
+                                     :in-process   [::http-in-process]
+                                     :in-problem   [::http-in-problem]
+                                     :in-failed    [::http-in-failed]
+                                     :in-succeeded [::http-in-succeeded]
+                                     :in-done      [::http-in-done]}}}}))
 
 (reg-event-fx
   ::http-in-setup
