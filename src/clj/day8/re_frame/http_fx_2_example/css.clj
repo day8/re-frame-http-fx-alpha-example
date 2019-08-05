@@ -2,17 +2,6 @@
   (:require
     [garden.def :refer [defstyles defkeyframes]]))
 
-(defkeyframes pulse
-  [:0%
-   {:stroke-width "1"
-    :stroke-opacity "1"}]
-  [:70%
-   {:stroke-width "12"
-    :stroke-opacity "0.4"}]
-  [:100%
-   {:stroke-width "1"
-    :stroke-opacity "1"}])
-
 (defstyles screen
   [:body
    {:font-family "'Roboto Condensed', sans-serif"}]
@@ -30,10 +19,4 @@
    [:.rc-md-icon-button
     :.rc-title
     {:color "#DDD"
-     :font-size "31px"}]]
-
-  pulse
-
-  [:svg
-   [:.pulse
-    {:animation [[pulse "0.5s" :infinite]]}]])
+     :font-size "31px"}]])
