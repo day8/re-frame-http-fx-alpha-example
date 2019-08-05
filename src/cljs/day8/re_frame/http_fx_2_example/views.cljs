@@ -5,6 +5,7 @@
    [re-com.core :as re-com]
    ["react-highlight.js" :default react-highlightjs]
    ["highlight.js/lib/languages/clojure"]
+   ["react-file-drop" :default react-file-drop]
    [day8.re-frame.http-fx-2-example.events :as events]
    [day8.re-frame.http-fx-2-example.routes :as routes]
    [day8.re-frame.http-fx-2-example.subs :as subs]))
@@ -33,6 +34,26 @@
           [highlight {:language "clojure"}
            (:request-state row)]]]])]))
 
+(defn file-drop
+  []
+  (let [files (subscribe [::subs/files])]
+    (if (empty? @files)
+      [:> react-file-drop
+       {:on-drop (fn [file-list]
+                   (let [files (vec (array-seq file-list))]
+                     (dispatch [::events/set-files files])))}]
+      [:table.table.table-striped.table-bordered
+       [:thead
+        [:tr
+         [:th "Filename"]
+         [:th "Size"]]]
+       [:tbody
+        (for [file @files]
+          ^{:key (gensym)}
+          [:tr
+           [:td (.-name file)]
+           [:td (str (js/Math.ceil (/ (.-size file) 1024)) "kB")]])]])))
+
 (defn server-knobs
   []
   (let [server (subscribe [::subs/server])]
@@ -46,7 +67,9 @@
                              :on-change #(dispatch [::events/set [:server :endpoint] %])
                              :choices (:endpoints @server)]]]
                 [re-com/gap :size "19px"]
-                (when-not (= :success (:endpoint @server))
+                (case (:endpoint @server)
+                  :upload [file-drop]
+                  :success [:div]
                   [re-com/h-box
                    :children [[re-com/label
                                :label "Frequency"]

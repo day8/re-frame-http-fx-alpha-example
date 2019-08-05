@@ -5,6 +5,7 @@
 
    :server {:endpoint :success
             :endpoints [{:id :success :label "Success"}
+                        {:id :upload  :label "File Upload"}
                         {:id :failure :label "Failure"}
                         {:id :timeout :label "Timeout"}
                         {:id :invalid :label "Invalid"}]

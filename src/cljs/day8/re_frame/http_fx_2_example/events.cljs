@@ -43,8 +43,22 @@
   (fn-traced [db [_ path value]]
     (assoc-in db path value)))
 
+(reg-event-db
+  ::set-files
+  (fn-traced [db [_ files]]
+    (assoc db :files files)))
+
 (reg-event-fx
   ::http-go
+  (fn-traced [{:keys [db]} _]
+    (let [{{:keys [endpoint]} :server} db
+          handler (case endpoint
+                    :upload [::http-upload-files]
+                    [::http-GET])]
+      {:dispatch handler})))
+
+(reg-event-fx
+  ::http-GET
   (fn-traced [{:keys [db]} _]
     (let [{{:keys [endpoint frequency]} :server} db
           {{:keys [timeout max-retries]} :client} db
@@ -57,6 +71,27 @@
               :profiles [:example]
               :url      url
               :params   {:frequency frequency}
+              :timeout  timeout
+              :context  {:db-path     db-path
+                         :max-retries max-retries}}})))
+
+(reg-event-fx
+  ::http-upload-files
+  (fn-traced [{:keys [db]} _]
+    (let [{{:keys [timeout max-retries]} :client} db
+          url "http://localhost:8080/upload"
+          db-path [:http :example]
+          body (reduce
+                 (fn [form-data file]
+                   (.append form-data (.-name file) file)
+                   form-data)
+                 (js/FormData.)
+                 (:files db))]
+      {:db   (assoc-in db (conj db-path :history) [])
+       :http {:action   :POST
+              :profiles [:example]
+              :url      url
+              :body     body
               :timeout  timeout
               :context  {:db-path     db-path
                          :max-retries max-retries}}})))

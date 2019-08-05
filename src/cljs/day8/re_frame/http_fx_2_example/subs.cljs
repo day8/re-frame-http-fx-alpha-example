@@ -25,6 +25,11 @@
     state))
 
 (reg-sub
+  ::files
+  (fn [{:keys [files]} _]
+    files))
+
+(reg-sub
   ::history
   (fn [db _]
     (let [history (get-in db [:http :example :history])]

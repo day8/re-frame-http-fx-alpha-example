@@ -31,6 +31,7 @@
 
   [(> :.file-drop :.file-drop-target)
    {:position "absolute"
+    :background-color "#39CCCC"
     :top 0
     :left 0
     :height "100%"
