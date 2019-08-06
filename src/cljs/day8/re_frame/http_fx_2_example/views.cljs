@@ -11,10 +11,27 @@
 
 (def highlight (r/adapt-react-class react-highlightjs))
 
-(defn fsm
+(defn state-history
   []
-  (let [state (subscribe [::subs/state])]
-    [:div]))
+  (let [history (subscribe [::subs/history])]
+    [:table.table.table-striped.table-bordered
+     {:style {:margin-top "50px"}}
+     [:thead
+      [:tr
+       [:th "Step"]
+       [:th "Request ID"]
+       [:th "State Handler"]]]
+     (for [row @history]
+       ^{:key (gensym)}
+       [:tbody
+        [:tr
+         [:td {:row-span 2} (:i row)]
+         [:td [:pre (get-in row [:request-state :request-id])]]
+         [:td [:pre (:state-handler row)]]]
+        [:tr
+         [:td {:col-span 2}
+          [highlight {:language "clojure"}
+           (:request-state row)]]]])]))
 
 (defn server-knobs
   []
@@ -50,7 +67,7 @@
   (let [handler (subscribe [::subs/handler])]
     [re-com/box
      :width "555px"
-     :child [highlight {:language "clojure"}
+     :child [highlight {:class-name "clojure"}
              @handler]]))
 
 (defn buttons
@@ -93,7 +110,7 @@
   []
   [re-com/h-box
    :children [[knobs]
-              [fsm]]])
+              [state-history]]])
 
 (defn title
   []

@@ -25,6 +25,17 @@
     state))
 
 (reg-sub
+  ::history
+  (fn [db _]
+    (let [history (get-in db [:http :example :history])]
+      (map-indexed
+        (fn [i m]
+          (-> m
+            (assoc :i i)
+            (update :request-state dissoc :fsm)))
+        history))))
+
+(reg-sub
   ::handler
   (fn [db _]
     (let [endpoint (get-in db [:server :endpoint])
