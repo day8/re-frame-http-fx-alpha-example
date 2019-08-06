@@ -62,14 +62,6 @@
                               [re-com/label
                                :label (str (:frequency @server)"%")]]])]]))
 
-(defn code
-  []
-  (let [handler (subscribe [::subs/handler])]
-    [re-com/box
-     :width "555px"
-     :child [highlight {:class-name "clojure"}
-             @handler]]))
-
 (defn buttons
   []
   (let [state (subscribe [::subs/state])]
@@ -103,8 +95,7 @@
      :children [[server-knobs]
                 [re-com/gap :size "31px"]
                 [buttons]
-                [re-com/gap :size "31px"]
-                [code]]]))
+                [re-com/gap :size "31px"]]]))
 
 (defn home-panel
   []

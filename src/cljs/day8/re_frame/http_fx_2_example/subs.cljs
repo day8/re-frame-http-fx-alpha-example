@@ -34,16 +34,3 @@
             (assoc :i i)
             (update :request-state dissoc :fsm)))
         history))))
-
-(reg-sub
-  ::handler
-  (fn [db _]
-    (let [endpoint (get-in db [:server :endpoint])
-          uri (case endpoint
-                :invalid "http://i-do-not-exist/invalid"
-                (str "http://localhost:8080/" (name endpoint)))
-          code (goog.string/format "(reg-event-fx %s (fn-traced [_ _] {:http {:id :xyz :profiles [:example] :get %s}}))"
-                    endpoint
-                    uri)]
-      code)))
-      ;;(zprint/zprint-str code))))
