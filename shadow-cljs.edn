@@ -2,8 +2,6 @@
 
  :nrepl  {:port 8777}
 
- :dev-http {8080 {:handler day8.re-frame.http-fx-2-example.handler/api-handler}}
-
  :builds {:app
           {:target     :browser
            :output-dir "resources/public/js/compiled/out"
@@ -20,7 +18,7 @@
                                                              re-frame.trace.trace-enabled?        false
                                                              day8.re-frame.tracing.trace-enabled? false}}}
            :devtools   {:http-root    "resources/public"
-                        :http-handler shadow.http.push-state/handle
+                        :http-handler day8.re-frame.http-fx-2-example.handler/api-handler
                         :http-port    8280
                         :after-load   day8.re-frame.http-fx-2-example.core/mount-root
                         :preloads     [devtools.preload

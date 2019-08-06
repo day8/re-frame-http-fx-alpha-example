@@ -11,9 +11,7 @@
     {:db   db/default-db
      :http {:action :reg-profile
             :id     :example
-            :values {:mode          "cors"
-                     :credentials   "omit"
-                     :content-types {#"application/.*json.*" :json}
+            :values {:content-types {#"application/.*json.*" :json}
                      :fsm           {:in-setup     [::http-in-setup]
                                      :in-process   [::http-in-process]
                                      :in-problem   [::http-in-problem]
@@ -64,7 +62,7 @@
           {{:keys [timeout max-retries]} :client} db
           url (if (= :invalid endpoint)
                 "http://i-do-not-exist/invalid"
-                (str "http://localhost:8080/" (name endpoint)))
+                (str "/" (name endpoint)))
           db-path [:http :example]]
       {:db   (assoc-in db (conj db-path :history) [])
        :http {:action   :GET
@@ -79,7 +77,7 @@
   ::http-upload-files
   (fn-traced [{:keys [db]} _]
     (let [{{:keys [timeout max-retries]} :client} db
-          url "http://localhost:8080/upload"
+          url "/upload"
           db-path [:http :example]
           body (reduce
                  (fn [form-data file]
