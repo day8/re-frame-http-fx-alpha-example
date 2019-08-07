@@ -42,7 +42,7 @@
   (GET "/failure"
        [frequency]
        (if (<= (rand-int 101) (Integer/parseInt frequency))
-         (service-unavailable "ERROR")
+         (internal-server-error "ERROR")
          (ok "OK"))))
 
 (def api-handler (-> #'routes
