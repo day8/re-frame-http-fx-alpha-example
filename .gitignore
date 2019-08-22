@@ -1,6 +1,8 @@
 /.idea/
 /.lein-repl-history
 /.shadow-cljs/
+/shadow-cljs.edn
+/package.json
 /http-fx-2-example.iml
 /node_modules/
 /resources/public/css/

@@ -4,7 +4,7 @@
                   :exclusions [com.google.javascript/closure-compiler-unshaded
                                org.clojure/google-closure-library]]
                  [thheller/shadow-cljs "2.8.51"]
-                 [re-frame "0.10.8"]
+                 [re-frame "0.10.9"]
                  [re-com "2.5.0"]
                  [clj-commons/secretary "1.2.4"]
                  [venantius/accountant "0.2.4"]
@@ -22,7 +22,8 @@
                  [ring/ring-defaults "0.3.2"
                   :exclusions [ring/ring-core]]]
 
-  :plugins [[lein-garden "0.3.0"]]
+  :plugins [[lein-shadow "0.1.5"]
+            [lein-garden "0.3.0"]]
 
   :min-lein-version "2.9.1"
 
@@ -35,8 +36,47 @@
                                     "resources/public/js/compiled"
                                     "resources/public/css"]
 
-  :aliases {"dev" ["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "watch" "app"]
-            "prod" ["with-profile" "prod" "run" "-m" "shadow.cljs.devtools.cli" "release" "app"]}
+  :shadow-cljs {:nrepl  {:port 8777}
+
+                :builds {:app
+                         {:target     :browser
+                          :output-dir "resources/public/js/compiled/out"
+                          :asset-path "/js/compiled/out"
+                          :dev        {:modules    {:base {:entries [devtools.preload
+                                                                     day8.re-frame-10x.preload
+                                                                     day8.re-frame.http-fx-2-example.core]}}
+                                       :compiler-options {:closure-defines {re-frame.trace.trace-enabled?        true
+                                                                            day8.re-frame.tracing.trace-enabled? true}}}
+                          :release    {:modules {:base {:entries [day8.re-frame.http-fx-2-example.core]}}
+                                       :compiler-options {:optimizations :advanced
+                                                          :pretty-print false
+                                                          :closure-defines {goog.DEBUG                           false
+                                                                            re-frame.trace.trace-enabled?        false
+                                                                            day8.re-frame.tracing.trace-enabled? false}}}
+                          :devtools   {:http-root    "resources/public"
+                                       :http-handler day8.re-frame.http-fx-2-example.handler/api-handler
+                                       :http-port    8280
+                                       :after-load   day8.re-frame.http-fx-2-example.core/mount-root
+                                       :preloads     [devtools.preload
+                                                      day8.re-frame-10x.preload]}}
+
+                         :browser-test
+                         {:target           :browser-test
+                          :ns-regexp        "-test$"
+                          :test-dir         "resources/public/js/compiled/browser-test/out"
+                          :compiler-options {:closure-defines {re-frame.trace.trace-enabled?        true
+                                                               day8.re-frame.tracing.trace-enabled? true}}
+
+                          :devtools         {:http-root "resources/public/js/compiled/browser-test/out"
+                                             :http-port 8290}}
+
+                         :karma-test
+                         {:target    :karma
+                          :ns-regexp "-test$"
+                          :output-to "resources/public/js/compiled/karma-test/out"}}}
+
+  :aliases {"dev-auto" ["with-profile" "dev" "shadow" "watch" "app"]
+            "prod" ["with-profile" "prod" "shadow" "release" "app"]}
 
   :garden {:builds [{:id           "screen"
                      :source-paths ["src/clj"]
