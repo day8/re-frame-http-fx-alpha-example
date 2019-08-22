@@ -1,13 +1,15 @@
 (defproject day8.re-frame/http-fx-2-example "0.1.0-SNAPSHOT"
-  :dependencies [[thheller/shadow-cljs "2.8.48"]
-                 [ns-tracker "0.4.0"]
-                 [org.clojure/clojure "1.10.1"]
-                 [org.clojure/clojurescript "1.10.520"]
+  :dependencies [[org.clojure/clojure "1.10.1"]
+                 [org.clojure/clojurescript "1.10.520"
+                  :exclusions [com.google.javascript/closure-compiler-unshaded
+                               org.clojure/google-closure-library]]
+                 [thheller/shadow-cljs "2.8.51"]
                  [re-frame "0.10.8"]
                  [re-com "2.5.0"]
                  [clj-commons/secretary "1.2.4"]
                  [venantius/accountant "0.2.4"]
                  [garden "1.3.9"]
+                 [ns-tracker "0.4.0"]
                  [day8.re-frame/http-fx-2 "2.0.0-SNAPSHOT"]
                  [compojure "1.6.1"
                   :exclusions [ring/ring-codec]]
