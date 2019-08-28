@@ -32,7 +32,6 @@
   :test-paths ["test/cljs"]
 
   :clean-targets ^{:protect false} [:target-path
-                                    ".shadow-cljs"
                                     "shadow-cljs.edn"
                                     "package.json"
                                     "package-lock.json"
