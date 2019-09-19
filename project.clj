@@ -17,7 +17,7 @@
                  [ring/ring-core "1.7.1"]
                  [ring/ring-devel "1.7.1"]
                  [ring-cors "0.1.13"]
-                 [ring/ring-json "0.4.0"
+                 [ring/ring-json "0.5.0"
                   :exclusions [ring/ring-core]]
                  [ring/ring-defaults "0.3.2"
                   :exclusions [ring/ring-core]]]
