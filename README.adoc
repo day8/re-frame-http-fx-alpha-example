@@ -1,7 +1,7 @@
 # re-frame :http effect example application
 
 Example application for
-link:https://github.com/Day8/re-frame-http-fx-2-example[re-frame-http-fx-2].
+link:https://github.com/day8/re-frame-http-fx-2-example[re-frame-http-fx-2].
 
 ## Requirements
 
@@ -13,7 +13,7 @@ link:https://github.com/Day8/re-frame-http-fx-2-example[re-frame-http-fx-2].
 ## Development
 
 ```text
-$ git clone git@github.com:Day8/re-frame-http-fx-2-example.git
+$ git clone git@github.com:day8/re-frame-http-fx-2-example.git
 $ cd re-frame-http-fx-2-example
 $ npm install
 $ lein garden auto
