@@ -1,4 +1,17 @@
-(defproject day8.re-frame/http-fx-alpha-example "0.1.0-SNAPSHOT"
+(defproject day8.re-frame/http-fx-alpha-example "see :git-version below https://github.com/arrdem/lein-git-version"
+
+  :git-version
+  {:status-to-version
+   (fn [{:keys [tag version branch ahead ahead? dirty?] :as git}]
+     (assert (re-find #"\d+\.\d+\.\d+" tag)
+       "Tag is assumed to be a raw SemVer version")
+     (if (and tag (not ahead?) (not dirty?))
+       tag
+       (let [[_ prefix patch] (re-find #"(\d+\.\d+)\.(\d+)" tag)
+             patch            (Long/parseLong patch)
+             patch+           (inc patch)]
+         (format "%s.%d-%s-SNAPSHOT" prefix patch+ ahead))))}
+
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/clojurescript "1.10.520"
                   :exclusions [com.google.javascript/closure-compiler-unshaded
@@ -22,7 +35,8 @@
                  [ring/ring-defaults "0.3.2"
                   :exclusions [ring/ring-core]]]
 
-  :plugins [[lein-shadow "0.1.6"]
+  :plugins [[me.arrdem/lein-git-version "2.0.3"]
+            [lein-shadow "0.1.6"]
             [lein-garden "0.3.0"]]
 
   :min-lein-version "2.9.1"
