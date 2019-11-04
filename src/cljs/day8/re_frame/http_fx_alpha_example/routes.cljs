@@ -1,11 +1,11 @@
-(ns day8.re-frame.http-fx-2-example.routes
+(ns day8.re-frame.http-fx-alpha-example.routes
   (:import goog.History)
   (:require
    [accountant.core :as accountant]
    [secretary.core :as secretary :refer-macros [defroute]]
    [goog.events :as gevents]
    [goog.history.EventType :as EventType]
-   [day8.re-frame.http-fx-2-example.events :as events]))
+   [day8.re-frame.http-fx-alpha-example.events :as events]))
 
 (def ^:dynamic *dispatch*
   (fn [event] (prn :dispatch event)))

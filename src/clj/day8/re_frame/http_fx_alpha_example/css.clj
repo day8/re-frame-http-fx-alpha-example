@@ -1,4 +1,4 @@
-(ns day8.re-frame.http-fx-2-example.css
+(ns day8.re-frame.http-fx-alpha-example.css
   (:require
     [garden.color :refer [rgba]]
     [garden.def :refer [defstyles defkeyframes]]
@@ -9,13 +9,13 @@
   [:body
    {:font-family "'Roboto Condensed', sans-serif"}]
 
-  [:.re-frame-http-fx-2-example-header
-   :.re-frame-http-fx-2-example-footer
+  [:.re-frame-http-fx-alpha-example-header
+   :.re-frame-http-fx-alpha-example-footer
    {:height "81px"
     :background-color "#111"
     :color "#DDD"}]
 
-  [:.re-frame-http-fx-2-example-title
+  [:.re-frame-http-fx-alpha-example-title
    {:padding-left "48px"}
    [:.rc-md-icon-button
     {:height "31px"}]

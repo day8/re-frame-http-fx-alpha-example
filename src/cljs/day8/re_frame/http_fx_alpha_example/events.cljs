@@ -1,9 +1,9 @@
-(ns day8.re-frame.http-fx-2-example.events
+(ns day8.re-frame.http-fx-alpha-example.events
   (:require
    [re-frame.core :refer [reg-event-db reg-event-fx]]
-   [day8.re-frame.http-fx-2-example.db :as db]
+   [day8.re-frame.http-fx-alpha-example.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced defn-traced]]
-   [day8.re-frame.http-fx-2]))
+   [day8.re-frame.http-fx-alpha]))
 
 (reg-event-fx
   ::initialize

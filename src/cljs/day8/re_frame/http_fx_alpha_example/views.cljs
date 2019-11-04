@@ -1,4 +1,4 @@
-(ns day8.re-frame.http-fx-2-example.views
+(ns day8.re-frame.http-fx-alpha-example.views
   (:require
    [reagent.core :as r]
    [re-frame.core :as re-frame :refer [subscribe dispatch]]
@@ -6,9 +6,9 @@
    ["react-highlight.js" :default react-highlightjs]
    ["highlight.js/lib/languages/clojure"]
    ["react-file-drop" :default react-file-drop]
-   [day8.re-frame.http-fx-2-example.events :as events]
-   [day8.re-frame.http-fx-2-example.routes :as routes]
-   [day8.re-frame.http-fx-2-example.subs :as subs]))
+   [day8.re-frame.http-fx-alpha-example.events :as events]
+   [day8.re-frame.http-fx-alpha-example.routes :as routes]
+   [day8.re-frame.http-fx-alpha-example.subs :as subs]))
 
 (def highlight (r/adapt-react-class react-highlightjs))
 
@@ -129,7 +129,7 @@
 (defn title
   []
   [re-com/h-box
-   :class "re-frame-http-fx-2-example-title"
+   :class "re-frame-http-fx-alpha-example-title"
    :align :center
    :children [[re-com/md-icon-button
                :md-icon-name "zmdi-network-alert"
@@ -143,7 +143,7 @@
 (defn header
   []
   [re-com/box
-   :class "re-frame-http-fx-2-example-header"
+   :class "re-frame-http-fx-alpha-example-header"
    :child [re-com/h-box
            :justify :between
            :children [[title]]]])
@@ -151,13 +151,13 @@
 (defn footer
   []
   [re-com/v-box
-   :class "re-frame-http-fx-2-example-footer"
+   :class "re-frame-http-fx-alpha-example-footer"
    :align :center
    :justify :center
-   :children [[:div.re-frame-http-fx-2-example-copyright
+   :children [[:div.re-frame-http-fx-alpha-example-copyright
                [:span {:dangerouslySetInnerHTML {:__html "&copy;"}}]
                "2019 Day8 Technology Pty Ltd, Australia."]
-              [:div.re-frame-http-fx-2-example-license
+              [:div.re-frame-http-fx-alpha-example-license
                "The MIT License (MIT)"]]])
 
 (defn- panels [panel-name]

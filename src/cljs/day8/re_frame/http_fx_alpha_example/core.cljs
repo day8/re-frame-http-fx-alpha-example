@@ -1,11 +1,11 @@
-(ns day8.re-frame.http-fx-2-example.core
+(ns day8.re-frame.http-fx-alpha-example.core
   (:require
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
-   [day8.re-frame.http-fx-2-example.events :as events]
-   [day8.re-frame.http-fx-2-example.routes :as routes]
-   [day8.re-frame.http-fx-2-example.views :as views]
-   [day8.re-frame.http-fx-2-example.config :as config]))
+   [day8.re-frame.http-fx-alpha-example.events :as events]
+   [day8.re-frame.http-fx-alpha-example.routes :as routes]
+   [day8.re-frame.http-fx-alpha-example.views :as views]
+   [day8.re-frame.http-fx-alpha-example.config :as config]))
 
 (defn dev-setup []
   (when config/debug?

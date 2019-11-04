@@ -1,7 +1,7 @@
 # re-frame :http effect example application
 
 Example application for
-link:https://github.com/day8/re-frame-http-fx-2-example[re-frame-http-fx-2].
+link:https://github.com/Day8/re-frame-http-fx-alpha[re-frame-http-fx-alpha].
 
 ## Requirements
 
@@ -13,8 +13,8 @@ link:https://github.com/day8/re-frame-http-fx-2-example[re-frame-http-fx-2].
 ## Development
 
 ```text
-$ git clone git@github.com:day8/re-frame-http-fx-2-example.git
-$ cd re-frame-http-fx-2-example
+$ git clone git@github.com:Day8/re-frame-http-fx-alpha-example.git
+$ cd re-frame-http-fx-alpha-example
 $ npm install
 $ lein garden auto
 ```
@@ -31,9 +31,9 @@ Then open all of the following links in different tabs or windows:
 * link:http://localhost:8290[Tests]
 * link:http://localhost:9630[Builds & REPL]
 
-CSS is in `src/clj/day8/re-frame/http-fx-2-example`.
+CSS is in `src/clj/day8/re-frame/http-fx-alpha-example`.
 
-Rest of the interesting code is in `src/cljs/day8/re-frame/http-fx-2-example`.
+Rest of the interesting code is in `src/cljs/day8/re-frame/http-fx-alpha-example`.
 
 ## License
 

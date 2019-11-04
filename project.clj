@@ -1,4 +1,4 @@
-(defproject day8.re-frame/http-fx-2-example "0.1.0-SNAPSHOT"
+(defproject day8.re-frame/http-fx-alpha-example "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/clojurescript "1.10.520"
                   :exclusions [com.google.javascript/closure-compiler-unshaded
@@ -10,7 +10,7 @@
                  [venantius/accountant "0.2.4"]
                  [garden "1.3.9"]
                  [ns-tracker "0.4.0"]
-                 [day8.re-frame/http-fx-2 "2.0.0-SNAPSHOT"]
+                 [day8.re-frame/http-fx-alpha "0.0.1"]
                  [compojure "1.6.1"
                   :exclusions [ring/ring-codec]]
                  [metosin/ring-http-response "0.9.1"]
@@ -46,19 +46,19 @@
                           :asset-path "/js/compiled/out"
                           :dev        {:modules    {:base {:entries [devtools.preload
                                                                      day8.re-frame-10x.preload
-                                                                     day8.re-frame.http-fx-2-example.core]}}
+                                                                     day8.re-frame.http-fx-alpha-example.core]}}
                                        :compiler-options {:closure-defines {re-frame.trace.trace-enabled?        true
                                                                             day8.re-frame.tracing.trace-enabled? true}}}
-                          :release    {:modules {:base {:entries [day8.re-frame.http-fx-2-example.core]}}
+                          :release    {:modules {:base {:entries [day8.re-frame.http-fx-alpha-example.core]}}
                                        :compiler-options {:optimizations :advanced
                                                           :pretty-print false
                                                           :closure-defines {goog.DEBUG                           false
                                                                             re-frame.trace.trace-enabled?        false
                                                                             day8.re-frame.tracing.trace-enabled? false}}}
                           :devtools   {:http-root    "resources/public"
-                                       :http-handler day8.re-frame.http-fx-2-example.handler/api-handler
+                                       :http-handler day8.re-frame.http-fx-alpha-example.handler/api-handler
                                        :http-port    8280
-                                       :after-load   day8.re-frame.http-fx-2-example.core/mount-root
+                                       :after-load   day8.re-frame.http-fx-alpha-example.core/mount-root
                                        :preloads     [devtools.preload
                                                       day8.re-frame-10x.preload]}}
 
@@ -82,7 +82,7 @@
 
   :garden {:builds [{:id           "screen"
                      :source-paths ["src/clj"]
-                     :stylesheet   day8.re-frame.http-fx-2-example.css/screen
+                     :stylesheet   day8.re-frame.http-fx-alpha-example.css/screen
                      :compiler     {:output-to     "resources/public/css/screen.css"
                                     :pretty-print? true}}]}
 

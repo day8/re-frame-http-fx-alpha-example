@@ -1,4 +1,4 @@
-(ns day8.re-frame.http-fx-2-example.subs
+(ns day8.re-frame.http-fx-alpha-example.subs
   (:require
    [re-frame.core :refer [reg-sub]]
    [zprint.core :as zprint]

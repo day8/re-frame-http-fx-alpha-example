@@ -1,4 +1,4 @@
-(ns day8.re-frame.http-fx-2-example.handler
+(ns day8.re-frame.http-fx-alpha-example.handler
   (:require
     [clojure.java.io :as io]
     [compojure.core :refer [GET POST defroutes]]

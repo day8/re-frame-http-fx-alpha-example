@@ -1,4 +1,4 @@
-(ns day8.re-frame.http-fx-2-example.db)
+(ns day8.re-frame.http-fx-alpha-example.db)
 
 (def default-db
   {:state :idle
