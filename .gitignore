@@ -1,5 +1,6 @@
 /.idea/
 /*.iml
+/pom.xml
 /.lein-repl-history
 /.shadow-cljs/
 /shadow-cljs.edn
