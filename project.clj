@@ -7,7 +7,7 @@
                  [re-frame "0.10.9"]
                  [re-com "2.6.0"]
                  [clj-commons/secretary "1.2.4"]
-                 [venantius/accountant "0.2.4"]
+                 [venantius/accountant "0.2.5"]
                  [garden "1.3.9"]
                  [ns-tracker "0.4.0"]
                  [day8.re-frame/http-fx-alpha "0.0.1"]
