@@ -22,7 +22,7 @@
                  [ring/ring-defaults "0.3.2"
                   :exclusions [ring/ring-core]]]
 
-  :plugins [[lein-shadow "0.1.5"]
+  :plugins [[lein-shadow "0.1.6"]
             [lein-garden "0.3.0"]]
 
   :min-lein-version "2.9.1"
