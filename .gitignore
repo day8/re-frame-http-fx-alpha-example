@@ -4,7 +4,7 @@
 /.shadow-cljs/
 /shadow-cljs.edn
 /package.json
-/http-fx-2-example.iml
+/package-lock.json
 /node_modules/
 /resources/public/css/
 /resources/public/js/
