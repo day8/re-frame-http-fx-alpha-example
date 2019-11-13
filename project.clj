@@ -27,7 +27,7 @@
                  [venantius/accountant "0.2.5"]
                  [garden "1.3.9"]
                  [ns-tracker "0.4.0"]
-                 [day8.re-frame/http-fx-alpha "0.0.1"]
+                 [day8.re-frame/http-fx-alpha "0.0.2"]
                  [compojure "1.6.1"
                   :exclusions [ring/ring-codec]]
                  [metosin/ring-http-response "0.9.1"]
