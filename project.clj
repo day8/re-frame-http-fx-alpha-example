@@ -1,20 +1,4 @@
-(defproject day8.re-frame/http-fx-alpha-example "see :git-version below https://github.com/arrdem/lein-git-version"
-
-  :git-version
-  {:status-to-version
-   (fn [{:keys [tag version branch ahead ahead? dirty?] :as git-status}]
-     (if-not (string? tag)
-       ;; If git-status is nil (i.e. IntelliJ reading project.clj) then return an empty version.
-       "_"
-       (if (and (not ahead?) (not dirty?))
-         tag
-         (let [[_ major minor patch suffix] (re-find #"v?(\d+)\.(\d+)\.(\d+)(-.+)?" tag)]
-           (if (nil? major)
-             ;; If tag is poorly formatted then return GIT-TAG-INVALID
-             "GIT-TAG-INVALID"
-             (let [patch' (try (Long/parseLong patch) (catch Throwable _ 0))
-                   patch+ (inc patch')]
-               (str major "." minor "." patch+ suffix "-" ahead "-SNAPSHOT")))))))}
+(defproject day8.re-frame/http-fx-alpha-example "lein-git-inject/version"
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/clojurescript "1.10.520"
@@ -39,9 +23,11 @@
                  [ring/ring-defaults "0.3.2"
                   :exclusions [ring/ring-core]]]
 
-  :plugins [[me.arrdem/lein-git-version "2.0.3"]
-            [lein-shadow "0.1.6"]
-            [lein-garden "0.3.0"]]
+  :plugins      [[day8/lein-git-inject "0.0.2"]
+                 [lein-shadow          "0.1.6"]
+                 [lein-garden          "0.3.0"]]
+
+  :middleware   [leiningen.git-inject/middleware]
 
   :min-lein-version "2.9.1"
 
