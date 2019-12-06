@@ -25,7 +25,7 @@
                   :exclusions [ring/ring-core]]]
 
   :plugins      [[day8/lein-git-inject "0.0.2"]
-                 [lein-shadow          "0.1.6"]
+                 [lein-shadow          "0.1.7"]
                  [lein-garden          "0.3.0"]]
 
   :middleware   [leiningen.git-inject/middleware]
