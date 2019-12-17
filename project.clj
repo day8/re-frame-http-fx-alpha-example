@@ -5,7 +5,7 @@
                   :exclusions [com.google.javascript/closure-compiler-unshaded
                                org.clojure/google-closure-library
                                org.clojure/google-closure-library-third-party]]
-                 [thheller/shadow-cljs "2.8.81"]
+                 [thheller/shadow-cljs "2.8.83"]
                  [re-frame "0.10.9"]
                  [re-com "2.6.0"]
                  [clj-commons/secretary "1.2.4"]
