@@ -24,7 +24,7 @@
                  [ring/ring-defaults "0.3.2"
                   :exclusions [ring/ring-core]]]
 
-  :plugins      [[day8/lein-git-inject "0.0.6"]
+  :plugins      [[day8/lein-git-inject "0.0.11"]
                  [lein-shadow          "0.1.7"]
                  [lein-garden          "0.3.0"]]
 
